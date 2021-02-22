@@ -1,4 +1,5 @@
-﻿using PathToNinja.Model;
+﻿using System.Collections;
+using PathToNinja.Model;
 using UnityEngine;
 
 namespace PathToNinja
@@ -12,14 +13,20 @@ namespace PathToNinja
         [Space] [SerializeField] private float _dashSpeed;
         [SerializeField] private float _restTreshold;
         [SerializeField] private float _destPointMagnitude;
+        [SerializeField] private LayerMask _platformLayer;
+        [SerializeField] private LayerMask _groundLayer;
 
         [Space] [SerializeField] private LevelBind _bind;
         [SerializeField] private EventBind _onHeroDone;
         [SerializeField] private EventBind _onEnemyDie;
 
+        [Space] [SerializeField] private Vector3 _footOffset;
+        [SerializeField] private float _groundCheckDistance;
+
         private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
         private static readonly int IdleKey = Animator.StringToHash("idle");
         private static readonly int SlashKey = Animator.StringToHash("slash");
+        private static readonly int IsDashingKey = Animator.StringToHash("is-dashing");
 
         private bool _checkForExit;
         private float _originalGravity;
@@ -47,17 +54,23 @@ namespace PathToNinja
         {
             if (_isDashing)
             {
-                var position = Vector3.MoveTowards(transform.position, _destination, Time.fixedDeltaTime * _dashSpeed);
+                var position = Vector3.MoveTowards(transform.position, _destination,
+                    Time.fixedDeltaTime * _dashSpeed);
                 _body.MovePosition(position);
 
                 if ((transform.position - _destination).magnitude < _destPointMagnitude)
                 {
                     _isDashing = false;
+                    _animator.SetBool(IsDashingKey, false);
                 }
             }
+            else
+            {
+                var isGrounded = IsGrounded();
 
-            _animator.SetBool(IdleKey, _body.velocity.y == 0);
-            _animator.SetFloat(VerticalVelocityKey, _body.velocity.y);
+                _animator.SetBool(IdleKey, isGrounded);
+                _animator.SetFloat(VerticalVelocityKey, _body.velocity.y);
+            }
 
             if (_checkForExit)
             {
@@ -71,17 +84,49 @@ namespace PathToNinja
 
         private void DashTo(Vector2 destPosition)
         {
+            var platform = GetPlatfrom();
+            if (platform != null)
+            {
+                StartCoroutine(JumpDown(platform));
+            }
+
             _isDashing = true;
             _destination = destPosition;
             _bind.CurrentDashCount.Value++;
             _checkForExit = _bind.DashLasts <= 0;
 
-            // _body.gravityScale = 0;
             var dest = (destPosition - _body.position).normalized * _dashSpeed;
             transform.localScale = new Vector3(dest.x > 0 ? 1 : -1, 1, 1);
 
             _body.velocity = Vector2.zero;
-            // _body.AddForce(dest, ForceMode2D.Impulse);
+            _animator.SetBool(IsDashingKey, true);
+        }
+
+        private IEnumerator JumpDown(Collider2D platformCollider)
+        {
+            platformCollider.enabled = false;
+            yield return new WaitForSeconds(0.5f);
+            platformCollider.enabled = true;
+        }
+
+        private Vector3 FootPosition => transform.position + _footOffset;
+
+        private Collider2D GetPlatfrom()
+        {
+            return Physics2D.Raycast(FootPosition, Vector2.down, _groundCheckDistance, _platformLayer).collider;
+        }
+
+        private bool IsGrounded()
+        {
+            var hit = Physics2D.Raycast(FootPosition, Vector2.down, _groundCheckDistance, _groundLayer);
+            return hit.collider != null;
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            var footPosition = FootPosition;
+            Debug.DrawRay(footPosition, Vector2.down * _groundCheckDistance, IsGrounded() ? Color.green : Color.red);
+            Gizmos.DrawIcon(footPosition, "Animation.FilterBySelection");
         }
 
         private void OnCollisionEnter2D(Collision2D other)
