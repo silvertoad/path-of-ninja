@@ -11,6 +11,7 @@ namespace PathToNinja
         [SerializeField] private LevelBind _bind;
         [SerializeField] private EventBind _onReplay;
         [SerializeField] private EventBind _onLevelComplete;
+        [SerializeField] private EventBind _onEnemyDie;
         [SerializeField] private BoolEventBind _showLevelCompletePopup;
 
         private LevelSettings _settings;
@@ -25,7 +26,15 @@ namespace PathToNinja
             _bind.Init(_settings);
 
             _onLevelComplete.Event.AddListener(OnLevelComplete);
+            _onEnemyDie.Event.AddListener(OnEnemyDie);
             _onReplay.Event.AddListener(OnReplay);
+        }
+
+        private void OnEnemyDie()
+        {
+            var isSucceed = _enemies.All(enemy => enemy.IsDead);
+            if (isSucceed)
+                _showLevelCompletePopup.Event?.Invoke(true);
         }
 
         private void OnReplay()

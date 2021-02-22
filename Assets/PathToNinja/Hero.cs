@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PathToNinja
 {
-    public class HeroController : MonoBehaviour
+    public class Hero : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D _body;
         [SerializeField] private Camera _camera;
@@ -14,6 +14,7 @@ namespace PathToNinja
 
         [Space] [SerializeField] private LevelBind _bind;
         [SerializeField] private EventBind _onHeroDone;
+        [SerializeField] private EventBind _onEnemyDie;
 
         private static readonly int VerticalVelocityKey = Animator.StringToHash("vertical-velocity");
         private static readonly int IdleKey = Animator.StringToHash("idle");
@@ -67,6 +68,7 @@ namespace PathToNinja
 
             Slash();
             enemy.Die();
+            _onEnemyDie.Event.Invoke();
         }
 
         private void Slash()
