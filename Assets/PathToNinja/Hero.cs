@@ -68,6 +68,7 @@ namespace PathToNinja
             {
                 var isGrounded = IsGrounded();
 
+                _animator.SetBool(IsDashingKey, false);
                 _animator.SetBool(IdleKey, isGrounded);
                 _animator.SetFloat(VerticalVelocityKey, _body.velocity.y);
             }
@@ -105,7 +106,7 @@ namespace PathToNinja
         private IEnumerator JumpDown(Collider2D platformCollider)
         {
             platformCollider.enabled = false;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
             platformCollider.enabled = true;
         }
 
