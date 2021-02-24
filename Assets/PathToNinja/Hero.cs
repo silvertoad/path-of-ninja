@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using PathToNinja.Components;
 using PathToNinja.Model;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace PathToNinja
         [SerializeField] private float _restTreshold;
         [SerializeField] private float _destPointMagnitude;
         [SerializeField] private LayerMask _platformLayer;
-        [SerializeField] private LayerMask _groundLayer;
+        [SerializeField] private TriggerState _isGrounded;
 
         [Space] [SerializeField] private LevelBind _bind;
         [SerializeField] private EventBind _onHeroDone;
@@ -58,6 +59,7 @@ namespace PathToNinja
                     Time.fixedDeltaTime * _dashSpeed);
                 _body.MovePosition(position);
 
+                Debug.Log((transform.position - _destination).magnitude);
                 if ((transform.position - _destination).magnitude < _destPointMagnitude)
                 {
                     _isDashing = false;
@@ -66,7 +68,7 @@ namespace PathToNinja
             }
             else
             {
-                var isGrounded = IsGrounded();
+                var isGrounded = _isGrounded.IsInTrigger;
 
                 _animator.SetBool(IsDashingKey, false);
                 _animator.SetBool(IdleKey, isGrounded);
@@ -117,16 +119,11 @@ namespace PathToNinja
             return Physics2D.Raycast(FootPosition, Vector2.down, _groundCheckDistance, _platformLayer).collider;
         }
 
-        private bool IsGrounded()
-        {
-            var hit = Physics2D.Raycast(FootPosition, Vector2.down, _groundCheckDistance, _groundLayer);
-            return hit.collider != null;
-        }
-
         private void OnDrawGizmosSelected()
         {
             var footPosition = FootPosition;
-            Debug.DrawRay(footPosition, Vector2.down * _groundCheckDistance, IsGrounded() ? Color.green : Color.red);
+            Debug.DrawRay(footPosition, Vector2.down * _groundCheckDistance,
+                _isGrounded.IsInTrigger ? Color.green : Color.red);
             Gizmos.DrawIcon(footPosition, "Animation.FilterBySelection");
         }
 
