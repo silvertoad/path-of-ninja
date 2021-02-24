@@ -974,6 +974,7 @@ GameObject:
   - component: {fileID: 1133106108}
   - component: {fileID: 1133106107}
   - component: {fileID: 1133106110}
+  - component: {fileID: 1133106106}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -981,6 +982,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1133106106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133106105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &1133106107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,7 +1167,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1709996373}
-        m_MethodName: OnReplayClick
+        m_MethodName: OnNextClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1209,7 +1227,6 @@ GameObject:
   - component: {fileID: 1709996372}
   - component: {fileID: 1709996371}
   - component: {fileID: 1709996373}
-  - component: {fileID: 1709996375}
   m_Layer: 5
   m_Name: CompletePopup
   m_TagString: Untagged
@@ -1289,27 +1306,7 @@ MonoBehaviour:
   _resultText: {fileID: 968824849}
   _onReplay: {fileID: 11400000, guid: 6a86cbb29570342f4849fc6749ab1c64, type: 2}
   _onNext: {fileID: 11400000, guid: e198ed2ca91534f8eb8558162cdef2e7, type: 2}
---- !u!223 &1709996375
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1709996369}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
+  _winButton: {fileID: 1550899109}
 --- !u!1 &1716516757
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,7 +1319,6 @@ GameObject:
   - component: {fileID: 1716516761}
   - component: {fileID: 1716516760}
   - component: {fileID: 1716516759}
-  - component: {fileID: 1716516762}
   m_Layer: 5
   m_Name: Replay
   m_TagString: Untagged
@@ -1446,27 +1442,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716516757}
   m_CullTransparentMesh: 0
---- !u!223 &1716516762
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716516757}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
 --- !u!1 &2042303223
 GameObject:
   m_ObjectHideFlags: 0

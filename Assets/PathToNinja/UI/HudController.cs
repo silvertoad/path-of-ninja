@@ -22,7 +22,7 @@ namespace PathToNinja.UI
 
         private void OnShowResults(bool isSucceed)
         {
-            _completePopup.SetKilled(isSucceed);
+            _completePopup.SetSucceed(isSucceed);
             _completePopup.gameObject.SetActive(true);
         }
 

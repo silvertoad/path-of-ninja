@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Linq;
 using PathToNinja.Model;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
+using UnityEngine.U2D;
 
 namespace PathToNinja
 {
@@ -17,6 +19,7 @@ namespace PathToNinja
 
         private LevelSettings _settings;
         private Enemy[] _enemies;
+        private bool _isInCompleteRoutine;
 
         private void Awake()
         {
@@ -42,9 +45,42 @@ namespace PathToNinja
             var isSucceed = _enemies.All(enemy => enemy.IsDead);
             if (isSucceed)
             {
-                _bind.IsCompleted = true;
-                _showLevelCompletePopup.Event?.Invoke(true);
+                Debug.Log("die");
+                StartCoroutine(SucceedRoutine());
             }
+        }
+
+        private IEnumerator SucceedRoutine()
+        {
+            _isInCompleteRoutine = true;
+            
+            var pixelCamera = FindObjectOfType<PixelPerfectCamera>();
+            var hero = FindObjectOfType<Hero>();
+
+            var dest = new Vector3(hero.transform.position.x, hero.transform.position.y,
+                pixelCamera.transform.position.z);
+            var frames = 10;
+            var currentFrame = 0;
+            var oldPos = pixelCamera.transform.position;
+            var oldPpu = pixelCamera.assetsPPU;
+            var defaultFrameRate = Application.targetFrameRate;
+            Application.targetFrameRate = 15;
+            while (currentFrame <= frames)
+            {
+                var progress = currentFrame / (float) frames;
+                pixelCamera.transform.position = Vector3.Lerp(oldPos, dest, progress);
+
+                pixelCamera.assetsPPU = (int) Mathf.Lerp(oldPpu, 50, progress);
+                currentFrame++;
+
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(0.3f);
+
+            Application.targetFrameRate = defaultFrameRate;
+            _bind.IsCompleted = true;
+            _showLevelCompletePopup.Event?.Invoke(true);
         }
 
         private void OnReplay()
@@ -59,6 +95,8 @@ namespace PathToNinja
 
         private void OnLevelComplete()
         {
+            if (_isInCompleteRoutine) return;
+            
             var isSucceed = _enemies.All(enemy => enemy.IsDead);
             _showLevelCompletePopup.Event?.Invoke(isSucceed);
         }
