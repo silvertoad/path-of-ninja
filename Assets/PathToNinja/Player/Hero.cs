@@ -53,6 +53,11 @@ namespace PathToNinja
 
         public void DashTo(Vector3 direction)
         {
+            if (_bind.IsCompleted) return;
+
+            _bind.CurrentDashCount.Value++;
+            _checkForExit = _bind.DashLasts <= 0;
+
             _body.velocity = Vector2.zero;
             var dashImpulse = direction.normalized * _dashSpeed * direction.magnitude;
             _body.AddForce(dashImpulse, ForceMode2D.Impulse);

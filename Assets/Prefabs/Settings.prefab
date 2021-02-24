@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8103199360548310043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8103199360548310046}
+  - component: {fileID: 8103199360548310044}
+  - component: {fileID: 8103199360548310045}
+  m_Layer: 0
+  m_Name: Settings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8103199360548310046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103199360548310043}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 843.3976, y: 906.9494, z: -603}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8103199360548310044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103199360548310043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab08a2c71b534d3a8a5aaaf18bc16409, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxDashCount: 1
+  _sceneName: Totor0
+  _nextSceneName: Totor1
+--- !u!114 &8103199360548310045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103199360548310043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b00204677eb4a9989396da11aa3322f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bind: {fileID: 11400000, guid: b349f2f336ced415dad778560942728e, type: 2}
+  _onReplay: {fileID: 11400000, guid: 6a86cbb29570342f4849fc6749ab1c64, type: 2}
+  _onNext: {fileID: 11400000, guid: e198ed2ca91534f8eb8558162cdef2e7, type: 2}
+  _onLevelComplete: {fileID: 11400000, guid: 9bdb51bdf18944258b68baed7467498c, type: 2}
+  _onEnemyDie: {fileID: 11400000, guid: 2eed0bbcf37bc4056bc2fd3cfd86befa, type: 2}
+  _showLevelCompletePopup: {fileID: 11400000, guid: 6c301518ce51840a5909caa77c54ccbd,
+    type: 2}

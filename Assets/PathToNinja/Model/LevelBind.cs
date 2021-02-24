@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace PathToNinja.Model
 {
@@ -13,8 +12,10 @@ namespace PathToNinja.Model
         {
             Settings.Value = settings;
             CurrentDashCount.Value = 0;
+            IsCompleted = false;
         }
 
         public int DashLasts => Settings.Value.MaxDashCount - CurrentDashCount.Value;
+        public bool IsCompleted { get; set; }
     }
 }

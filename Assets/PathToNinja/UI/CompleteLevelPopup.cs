@@ -9,6 +9,7 @@ namespace PathToNinja.UI
         [SerializeField] private Text _resultText;
 
         [Space] [SerializeField] private EventBind _onReplay;
+        [Space] [SerializeField] private EventBind _onNext;
 
         private void OnEnable()
         {
@@ -22,6 +23,11 @@ namespace PathToNinja.UI
         public void OnReplayClick()
         {
             _onReplay.Event.Invoke();
+        }
+
+        public void OnNextClick()
+        {
+            _onNext.Event.Invoke();
         }
 
         public void SetKilled(bool isSucceed)
