@@ -48,7 +48,14 @@ namespace PathToNinja
 
             var screenPosition = Input.mousePosition;
             var worldPosition = _camera.ScreenToWorldPoint(screenPosition);
-            DashTo(worldPosition);
+            // DashTo(worldPosition);
+        }
+
+        public void DashTo(Vector3 direction)
+        {
+            _body.velocity = Vector2.zero;
+            var dashImpulse = direction.normalized * _dashSpeed * direction.magnitude;
+            _body.AddForce(dashImpulse, ForceMode2D.Impulse);
         }
 
         private void FixedUpdate()
@@ -59,7 +66,6 @@ namespace PathToNinja
                     Time.fixedDeltaTime * _dashSpeed);
                 _body.MovePosition(position);
 
-                Debug.Log((transform.position - _destination).magnitude);
                 if ((transform.position - _destination).magnitude < _destPointMagnitude)
                 {
                     _isDashing = false;
