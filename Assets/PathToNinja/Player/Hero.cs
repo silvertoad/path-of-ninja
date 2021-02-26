@@ -78,7 +78,7 @@ namespace PathToNinja
         private IEnumerator JumpDown(Collider2D platformCollider)
         {
             platformCollider.enabled = false;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
             platformCollider.enabled = true;
         }
 
