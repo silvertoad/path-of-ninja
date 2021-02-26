@@ -46,6 +46,7 @@ namespace PathToNinja
             if (isSucceed)
             {
                 Debug.Log("die");
+                _bind.IsCompleted = true;
                 StartCoroutine(SucceedRoutine());
             }
         }
@@ -79,7 +80,6 @@ namespace PathToNinja
             yield return new WaitForSeconds(0.3f);
 
             Application.targetFrameRate = defaultFrameRate;
-            _bind.IsCompleted = true;
             _showLevelCompletePopup.Event?.Invoke(true);
         }
 
@@ -97,6 +97,7 @@ namespace PathToNinja
         {
             if (_isInCompleteRoutine) return;
             
+            _bind.IsCompleted = true;
             var isSucceed = _enemies.All(enemy => enemy.IsDead);
             _showLevelCompletePopup.Event?.Invoke(isSucceed);
         }

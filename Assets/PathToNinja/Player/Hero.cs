@@ -54,6 +54,12 @@ namespace PathToNinja
         public void DashTo(Vector3 direction)
         {
             if (_bind.IsCompleted) return;
+            
+            var platform = GetPlatform();
+            if (platform != null)
+            {
+                StartCoroutine(JumpDown(platform));
+            }
 
             _bind.CurrentDashCount.Value++;
             _checkForExit = _bind.DashLasts <= 0;
@@ -98,7 +104,7 @@ namespace PathToNinja
 
         private void DashTo(Vector2 destPosition)
         {
-            var platform = GetPlatfrom();
+            var platform = GetPlatform();
             if (platform != null)
             {
                 StartCoroutine(JumpDown(platform));
@@ -125,7 +131,7 @@ namespace PathToNinja
 
         private Vector3 FootPosition => transform.position + _footOffset;
 
-        private Collider2D GetPlatfrom()
+        private Collider2D GetPlatform()
         {
             return Physics2D.Raycast(FootPosition, Vector2.down, _groundCheckDistance, _platformLayer).collider;
         }
@@ -133,8 +139,11 @@ namespace PathToNinja
         private void OnDrawGizmosSelected()
         {
             var footPosition = FootPosition;
+            // Debug.DrawRay(footPosition, Vector2.down * _groundCheckDistance,
+            //     _isGrounded.IsInTrigger ? Color.green : Color.red);
+            
             Debug.DrawRay(footPosition, Vector2.down * _groundCheckDistance,
-                _isGrounded.IsInTrigger ? Color.green : Color.red);
+                GetPlatform() != null ? Color.green : Color.red);
             Gizmos.DrawIcon(footPosition, "Animation.FilterBySelection");
         }
 
