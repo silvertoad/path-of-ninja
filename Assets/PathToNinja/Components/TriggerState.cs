@@ -7,7 +7,7 @@ namespace PathToNinja.Components
     {
         [SerializeField] private LayerMask _trigger;
         [SerializeField] private bool _isInTrigger;
-        [SerializeField] private Collider2D _collider;
+        private Collider2D _collider;
         public bool IsInTrigger => _isInTrigger;
 
         private void Awake()
